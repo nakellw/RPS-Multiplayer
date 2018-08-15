@@ -1,4 +1,4 @@
-$(document).ready(function () {
+
 
 	// Link to Firebase & Initialize Firebase
 	var config = {
@@ -22,15 +22,15 @@ $(document).ready(function () {
 		// Grabs user input and assign to variables
 		var trainName = $("#trainNameInput").val().trim();
 		var destination = $("#destinationInput").val().trim();
-		var trainTimeInput = moment($("#trainTimeInput").val().trim(), "HH:mm").subtract(10, "years").format("X");;
+		var trainTimeInput = moment($("#trainTimeInput").val().trim(), "HH:mm").subtract(10, "years").format("X");
 		var frequencyInput = $("#frequencyInput").val().trim();
 
 		var newTrain = {
 			name: trainName,
 			destination: destination,
 			trainTime: trainTimeInput,
-			frequency: frequencyInput,
-		}
+			frequency: frequencyInput
+		};
 
 		// pushing  above trainInfo to Firebase 
 		database.ref().push(newTrain);
@@ -40,10 +40,10 @@ $(document).ready(function () {
 		$("#destinationInput").val("");
 		$("#trainInput").val("");
 		$("#frequencyInput").val("");
-		return false;
+		
 	});
 
-	database.on("child_added", function (childSnapshot, prevChildKey) {
+	database.on("child_added", function (childSnapshot) { console.log(childSnapshot.val());
 
 
 		// assign firebase variables to snapshots.
@@ -61,4 +61,4 @@ $(document).ready(function () {
 		$("#trainTable > tbody").append("<tr><td>" + fbName + "</td><td>" + fbDestination + "</td><td>" + fbFreq + " mins" + "</td><td>" + nextTrainArrival + "</td><td>" + minutes + "</td></tr>");
 
 	});
-});
+

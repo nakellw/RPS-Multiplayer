@@ -1,18 +1,17 @@
-
+$(document).ready(function(){
 
 	// Link to Firebase & Initialize Firebase
 	var config = {
-		apiKey: "AIzaSyCIP6EVw7ZuL9YSj2FTn8r3nJJ1lmUqb2A",
-		authDomain: "rpsmulitplayer-cafb1.firebaseapp.com",
-		databaseURL: "https://rpsmulitplayer-cafb1.firebaseio.com",
-		projectId: "rpsmulitplayer-cafb1",
-		storageBucket: "rpsmulitplayer-cafb1.appspot.com",
-		messagingSenderId: "268693511892"
-	};
-	firebase.initializeApp(config);
-	var database = firebase.database();
+		apiKey: "AIzaSyCudiY5tvRu-sKNAh9t7VI_rkq9omFtQf8",
+		authDomain: "trainscheduler223.firebaseapp.com",
+		databaseURL: "https://trainscheduler223.firebaseio.com",
+		projectId: "trainscheduler223",
+		storageBucket: "",
+		messagingSenderId: "938108376915"
+	  };
+	  firebase.initializeApp(config);
 
-
+var database=firebase.database();
 
 	// Adding Trains
 	$("#addTrainBtn").on("click", function () {
@@ -25,15 +24,20 @@
 		var trainTimeInput = moment($("#trainTimeInput").val().trim(), "HH:mm").subtract(10, "years").format("X");
 		var frequencyInput = $("#frequencyInput").val().trim();
 
-		var newTrain = {
+// 		var newTrain = {
+// 			name: trainName,
+// 			destination: destination,
+// 			trainTime: trainTimeInput,
+// 			frequency: frequencyInput
+// 		};
+// console.log(newTrain);
+		// pushing  above trainInfo to Firebase 
+		database.ref().push({
 			name: trainName,
 			destination: destination,
 			trainTime: trainTimeInput,
-			frequency: frequencyInput
-		};
-
-		// pushing  above trainInfo to Firebase 
-		database.ref().push(newTrain);
+			frequency: frequencyInput}
+		);
 
 		// clear text-boxes
 		$("#trainNameInput").val("");
@@ -43,7 +47,7 @@
 		
 	});
 
-	database.on("child_added", function (childSnapshot) { console.log(childSnapshot.val());
+	database.ref().on("child_added", function (childSnapshot) { console.log(childSnapshot.val());
 
 
 		// assign firebase variables to snapshots.
@@ -62,3 +66,4 @@
 
 	});
 
+})//end
